@@ -18,8 +18,8 @@ import (
 	"github.com/gorilla/mux"
 	accesslog "github.com/mash/go-accesslog"
 	flag "github.com/ogier/pflag"
-	"github.com/openatx/wdaproxy/web"
 	"github.com/qiniu/log"
+	"github.com/ryanluoo/wdaproxy/web"
 	_ "github.com/shurcooL/vfsgen"
 )
 
@@ -30,6 +30,7 @@ func init() {
 var (
 	version        = "develop"
 	lisPort        = 8100
+	forwardedPort  = 8100
 	pWda           string
 	udid           string
 	yosemiteServer string
@@ -94,6 +95,7 @@ func LocalIP() string {
 func main() {
 	showVer := flag.BoolP("version", "v", false, "Print version")
 	flag.IntVarP(&lisPort, "port", "p", 8100, "Proxy listen port")
+	flag.IntVarP(&forwardedPort, "fport", "f", 8100, "Forwarded port of device")
 	flag.StringVarP(&udid, "udid", "u", "", "device udid")
 	flag.StringVarP(&pWda, "wda", "W", "", "WebDriverAgent project directory [optional]")
 	flag.BoolVarP(&debug, "debug", "d", false, "Open debug mode")
@@ -138,8 +140,8 @@ func main() {
 		errC <- http.Serve(lis, accesslog.NewLoggingHandler(rt, HTTPLogger{}))
 	}()
 	go func() {
-		log.Printf("launch iproxy (udid: %s)", strconv.Quote(udid))
-		c := exec.Command("iproxy", strconv.Itoa(freePort), "8100")
+		log.Printf("launch iproxy (udid: %s) from (forwarded port: %s)", strconv.Quote(udid), strconv.Itoa(forwardedPort))
+		c := exec.Command("iproxy", strconv.Itoa(freePort), strconv.Itoa(forwardedPort))
 		if udid != "" {
 			c.Args = append(c.Args, udid)
 		}

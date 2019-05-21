@@ -25,62 +25,32 @@ func BenchmarkOpenStepEncode(b *testing.B) {
 }
 
 func TestEncode(t *testing.T) {
-	var failed bool
 	for _, test := range tests {
-		failed = false
-		t.Logf("Testing Encode (%s)", test.Name)
+		subtest(t, test.Name, func(t *testing.T) {
+			for fmt, doc := range test.Documents {
+				if test.SkipEncode[fmt] {
+					continue
+				}
+				subtest(t, FormatNames[fmt], func(t *testing.T) {
+					encoded, err := Marshal(test.Value, fmt)
 
-		// A test that should render no output!
-		errors := make(map[int]error)
-		if test.ShouldFail && len(test.Expected) == 0 {
-			_, err := Marshal(test.Data, XMLFormat)
-			failed = failed || (test.ShouldFail && err == nil)
-		}
-
-		results := make(map[int][]byte)
-		for fmt, dat := range test.Expected {
-			if test.SkipEncode[fmt] {
-				continue
-			}
-
-			results[fmt], errors[fmt] = Marshal(test.Data, fmt)
-			failed = failed || (test.ShouldFail && errors[fmt] == nil)
-			failed = failed || !bytes.Equal(dat, results[fmt])
-		}
-
-		if failed {
-			t.Logf("Value: %#v", test.Data)
-			if test.ShouldFail {
-				t.Logf("Expected: Error")
-			} else {
-				printype := "%s"
-				for fmt, dat := range test.Expected {
-					if fmt == BinaryFormat {
-						printype = "%2x"
-					} else {
-						printype = "%s"
+					if err != nil {
+						t.Error(err)
 					}
-					t.Logf("Expected %s: "+printype+"\n", FormatNames[fmt], dat)
-				}
-			}
 
-			printype := "%s"
-			for fmt, dat := range results {
-				if fmt == BinaryFormat {
-					printype = "%2x"
-				} else {
-					printype = "%s"
-				}
-				t.Logf("Received %s: "+printype+"\n", FormatNames[fmt], dat)
+					if !bytes.Equal(doc, encoded) {
+						printype := "%s"
+						if fmt == BinaryFormat {
+							printype = "%2x"
+						}
+						t.Logf("Value: %#v", test.Value)
+						t.Logf("Expected: "+printype+"\n", doc)
+						t.Logf("Received: "+printype+"\n", encoded)
+						t.Fail()
+					}
+				})
 			}
-			for fmt, err := range errors {
-				if err != nil {
-					t.Logf("Error %s: %v\n", FormatNames[fmt], err)
-				}
-			}
-			t.Log("FAILED")
-			t.Fail()
-		}
+		})
 	}
 }
 

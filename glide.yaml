@@ -1,4 +1,4 @@
-package: github.com/openatx/wdaproxy
+package: github.com/ryanluoo/wdaproxy
 import:
 - package: github.com/facebookgo/freeport
 - package: github.com/shurcooL/vfsgen

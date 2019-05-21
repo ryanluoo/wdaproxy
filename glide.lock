@@ -1,36 +1,30 @@
-hash: eae01b2276296447cbd7e12179d76c0f49e7430a44865f50d63b01260d499017
-updated: 2017-04-07T17:22:16.746702043+08:00
+hash: fca09300c6cec6a0405e1705e5d46ae7ec1ab7e780a9a2840a5b5687b25f2590
+updated: 2019-05-21T21:08:45.541769+08:00
 imports:
 - name: github.com/codeskyblue/muuid
   version: 44f8dfd4b3a966e347fe17845ccdc0ba16218b5c
 - name: github.com/DHowett/go-plist
-  version: 795cf23fd27fdbda70145d79acd9670319f8a622
+  version: 591f970eefbbeb04d7b37f334a0c4c3256e32876
 - name: github.com/facebookgo/freeport
   version: d4adf43b75b9357dc7775f033e807a3411591522
-- name: github.com/gorilla/context
-  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
-  version: 599cba5e7b6137d46ddf58fb1765f5d928e69604
+  version: ed099d42384823742bba0bf9a72b53b55c9e2e38
 - name: github.com/gorilla/websocket
-  version: a91eba7f97777409bc2c443f5534d41dd20c5720
+  version: 80c2d40e9b91f2ef7a9c1a403aeec64d1b89a9a6
 - name: github.com/mash/go-accesslog
-  version: 9ba8e13f36087d6cb83d9a9f17f9e8da137d5ee9
+  version: 610c2be042175cc8a71aed9230c058b1d15c5d61
 - name: github.com/ogier/pflag
   version: 45c278ab3607870051a2ea9040bb85fcb8557481
 - name: github.com/pkg/errors
-  version: ff09b135c25aae272398c51a07235b90a75aa4f0
+  version: 27936f6d90f9c8e1145f11ed52ffffbfdb9e0af7
 - name: github.com/qiniu/log
   version: a304a74568d6982c5b89de1c68ac8fca3add196a
 - name: github.com/satori/go.uuid
   version: b061729afc07e77a8aa4fad0a2fd840958f1942a
 - name: github.com/shurcooL/httpfs
-  version: df3d5d88c59699064c4449a2d4e3db0f07e74ed9
+  version: 74dc9339e414ad069a8d04bba7e7aafd08043a25
   subpackages:
   - vfsutil
 - name: github.com/shurcooL/vfsgen
-  version: 47fc2dca6b1893fc933dd7476c615a3fda08e3b9
-- name: golang.org/x/tools
-  version: 24acc66eabead631b4e856255a9ad925549cee80
-  subpackages:
-  - godoc/vfs
+  version: 6a9ea43bcacdf716a5c1b38efff722c07adf0069
 testImports: []
